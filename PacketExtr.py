@@ -15,7 +15,7 @@ def read_packet_size() -> int:
     HEADER_PREFIX_BYTES = b'Size: '
 
     # Extract header.
-    header_prefix = sys.stdin.buffer.read1(len(HEADER_PREFIX_BYTES))
+    header_prefix = sys.stdin.buffer.read(len(HEADER_PREFIX_BYTES))
     if has_no_more_packets := (header_prefix == b''):
         return -1
     assert header_prefix == HEADER_PREFIX_BYTES, \
@@ -38,7 +38,7 @@ def read_next_packet() -> bytes | None:
     packet_size = read_packet_size()
     if has_no_more_packets := (packet_size == -1):
         return None
-    payload = sys.stdin.buffer.read1(packet_size)
+    payload = sys.stdin.buffer.read(packet_size)
     return payload
 
 
